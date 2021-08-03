@@ -203,14 +203,17 @@
                 this.s_img_dropdown_open = false;
             },
             $imgFilesAdd($files) {
+                const fileList=[...$files]
                 // valid means if the image_filter exist.
                 let valid = (typeof this.image_filter === 'function');
-                for (let i = 0; i < $files.length; i++) {
-                    if (valid && this.image_filter($files[i]) === true) {
-                        this.$imgFileAdd($files[i]);
-                    } else if (!valid && $files[i].type.match(/^image\//i)) {
-                        this.$imgFileAdd($files[i]);
-                    }
+                for (let i = 0; i < fileList.length; i++) {
+                    setTimeout(() => {
+                        if (valid && this.image_filter(fileList[i]) === true) {
+                          this.$imgFileAdd(fileList[i]);
+                      } else if (!valid && fileList[i].type.match(/^image\//i)) {
+                          this.$imgFileAdd(fileList[i]);
+                      }
+                    }, 50 * i);
                 }
             },
             $imgAdd($e) {
